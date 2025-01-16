@@ -30,4 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
           answer: "William Shakespeare",
         },
     ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    startBtn.addEventListener('click', startQuiz);
+
+    function startQuiz() {
+      startBtn.classList.add('hidden');
+      questionContainer.classList.remove('hidden');
+      nextBtn.classList.remove('hidden');
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionText.textContent = currentQuestion.question;
+      choicesList.innerHTML = '';
+      currentQuestion.choices.forEach((choice) => {
+        const li  = document.createElement('li');
+        const button = document.createElement('button');
+      })
+    }
 });
