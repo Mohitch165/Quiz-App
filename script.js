@@ -43,13 +43,47 @@ document.addEventListener('DOMContentLoaded', () => {
       displayQuestion();
     }
 
+    nextBtn.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if(currentQuestionIndex < questions.length) {
+        displayQuestion();
+      } else {
+        showResult();
+      }
+    });
     function displayQuestion() {
       const currentQuestion = questions[currentQuestionIndex];
       questionText.textContent = currentQuestion.question;
       choicesList.innerHTML = '';
       currentQuestion.choices.forEach((choice) => {
         const li  = document.createElement('li');
-        const button = document.createElement('button');
-      })
+        li.addEventListener('click', () => selectAnswer(choice, li));
+        li.textContent = choice;
+        choicesList.appendChild(li);
+      });
+    }
+
+    function showResult() {
+      questionContainer.classList.add('hidden');
+      resultContainer.classList.remove('hidden');
+      scoreDisplay.textContent = `${score} out of ${questions.length}`;
+    }
+
+    restartBtn.addEventListener('click', () => {
+      currentQuestionIndex = 0;
+      resultContainer.classList.add('hidden');
+      score = 0;
+      startQuiz();
+    })
+
+    function selectAnswer(choice, liElement) {
+      const correctAnswer = questions[currentQuestionIndex].answer;
+      const allChoices = choicesList.querySelectorAll('li');
+      allChoices.forEach((li) => li.classList.remove('active'));
+      liElement.classList.add('active');
+      if(choice === correctAnswer) {
+        score++;
+      }
+      nextBtn.classList.remove('hidden');
     }
 });
