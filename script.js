@@ -43,14 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
       displayQuestion();
     }
 
-    nextBtn.addEventListener('click', () => {
-      currentQuestionIndex++;
-      if(currentQuestionIndex < questions.length) {
-        displayQuestion();
-      } else {
-        showResult();
-      }
-    });
     function displayQuestion() {
       const currentQuestion = questions[currentQuestionIndex];
       questionText.textContent = currentQuestion.question;
@@ -62,6 +54,26 @@ document.addEventListener('DOMContentLoaded', () => {
         choicesList.appendChild(li);
       });
     }
+
+    function selectAnswer(choice, liElement) {
+      const correctAnswer = questions[currentQuestionIndex].answer;
+      const allChoices = choicesList.querySelectorAll('li');
+      allChoices.forEach((li) => li.classList.remove('active'));
+      liElement.classList.add('active');
+      if(choice === correctAnswer) {
+        score++;
+      }
+      nextBtn.classList.remove('hidden');
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentQuestionIndex++;
+      if(currentQuestionIndex < questions.length) {
+        displayQuestion();
+      } else {
+        showResult();
+      }
+    });
 
     function showResult() {
       questionContainer.classList.add('hidden');
@@ -75,15 +87,4 @@ document.addEventListener('DOMContentLoaded', () => {
       score = 0;
       startQuiz();
     })
-
-    function selectAnswer(choice, liElement) {
-      const correctAnswer = questions[currentQuestionIndex].answer;
-      const allChoices = choicesList.querySelectorAll('li');
-      allChoices.forEach((li) => li.classList.remove('active'));
-      liElement.classList.add('active');
-      if(choice === correctAnswer) {
-        score++;
-      }
-      nextBtn.classList.remove('hidden');
-    }
 });
