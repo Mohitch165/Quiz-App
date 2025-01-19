@@ -64,6 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
         score++;
       }
       nextBtn.classList.remove('hidden');
+      hideOtherChoices(liElement);
+    }
+
+    function hideOtherChoices(liElement) {
+      const allChoices = choicesList.querySelectorAll('li');
+      allChoices.forEach((li) => {
+        if(li !== liElement) {
+          li.classList.add('disabled');
+        }
+      });
     }
 
     nextBtn.addEventListener('click', () => {
